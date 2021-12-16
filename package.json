@@ -1,0 +1,29 @@
+{
+  "name": "team-generator",
+  "version": "1.0.0",
+  "description": "Employee Team Generator",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heatedtowel/team-Generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/heatedtowel/team-Generator/issues"
+  },
+  "homepage": "https://github.com/heatedtowel/team-Generator#readme",
+  "dependencies": {
+    "fs": "^0.0.1-security",
+    "inquirer": "^8.2.0",
+    "jest": "^27.4.5"
+  }
+}
