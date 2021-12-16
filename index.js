@@ -1,10 +1,13 @@
 const fs = require('fs');
 const inquirer = require('inquirer');
-const Employee = require('Employee');
-const Engineer = require('Engineer');
-const Intern = require('Intern');
-const Manager = require('Manager');
+const Employee = require('./lib/employee');
+const Engineer = require('./lib/engineer');
+const Intern = require('./lib/intern');
+const Manager = require('./lib/manager');
+const buildHTML = require('./src/script')
 
+
+employeeList = [];
 
 function newEmployee() {
   inquirer
@@ -12,18 +15,18 @@ function newEmployee() {
       {
         type: 'list',
         message: 'What would you like to do next?',
-        choices: ['Add an Engineer', 'Add an Intern', `I'm done`],
+        choices: ['Add an Engineer', 'Add an Intern', 'Finished'],
         name: 'type',
       }
     ])
     .then((answers) => {
       switch (answers.type) {
         case 'Add an Engineer':
-          engineer();
+          return engineer();
         case 'Add an Intern':
-          internal();
-        case `I'm done`:
-          buildHTML();
+          return intern();
+        case 'Finished':
+          return writeFile(answers);
       }
     });
 };
@@ -52,16 +55,15 @@ function manager() {
         name: 'phone',
       }
     ])
-    .then((name, id, email, phone) => {
-      const intern = new Manager(name, id, email, phone)
-      employees.push(intern)
+    .then(({ name, id, email, phone }) => {
+      const manager = new Manager(name, id, email, phone);
+      employeeList.push(manager);
       newEmployee();
     });
 }
 
-
 function engineer() {
-  inquirer
+  return inquirer
     .prompt([
       {
         type: 'input',
@@ -84,9 +86,9 @@ function engineer() {
         name: 'github',
       }
     ])
-    .then((name, id, email, github) => {
+    .then(({ name, id, email, github }) => {
       const engineer = new Engineer(name, id, email, github)
-      employees.push(engineer)
+      employeeList.push(engineer)
       newEmployee();
     });
 }
@@ -115,9 +117,30 @@ function intern() {
         name: 'school',
       }
     ])
-    .then((name, id, email, school) => {
+    .then(({ name, id, email, school }) => {
       const intern = new Intern(name, id, email, school)
-      employees.push(intern)
+      employeeList.push(intern)
       newEmployee();
     });
 }
+
+function writeFile() {
+  fs.writeFile('./dist/index.html', buildHTML(employeeList), err => {
+    if (err) {
+      console.log(err);
+      return;
+    } else {
+      console.log('Page created successfully')
+    }
+  })
+}
+
+function init() {
+  manager();
+}
+
+init();
+
+
+
+
