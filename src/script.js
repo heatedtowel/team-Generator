@@ -1,3 +1,5 @@
+//Instructor provided html layout
+
 const Employee = require('../lib/employee');
 const Engineer = require('../lib/engineer');
 const Intern = require('../lib/intern');
@@ -9,9 +11,9 @@ function buildHTML(employeeList) {
     let role = employee.getRole();
     let finalLI = '';
     if (role === 'Intern') {
-      finalLI = `<li class="list-group-item">School: ${employee.getSchool()}:</li>`
+      finalLI = `<li class="list-group-item">School: ${employee.getSchool()}</li>`
     } else if (role === 'Manager') {
-      finalLI = `<li class="list-group-item">Number: ${employee.getNumber()}:</li>`
+      finalLI = `<li class="list-group-item">Phone #: ${employee.getNumber()}</li>`
     } else if (role === 'Engineer') {
       finalLI = `<li class="list-group-item"><a target='_blank' href='https://github.com/${employee.getGithub()}'>Github: ${employee.getGithub()}</a></li>`
     }
@@ -40,13 +42,23 @@ function buildHTML(employeeList) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bio</title>
+    <link rel="stylesheet" href="./style.css">
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet">
   </head>
-  
-  <body>${cards}</body>
-  
+  <body>
+  <nav id="navBar">
+    <div id="navBarCenter">
+      <span>
+        <h1>Employee Team Profile Generator</h1>
+      </span>
+    </div>
+  </nav>
+  <section>
+    ${cards}
+  </section>
+  </body>
   </html>`
 }
 
